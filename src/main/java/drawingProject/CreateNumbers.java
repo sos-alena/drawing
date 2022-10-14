@@ -1,10 +1,7 @@
 package drawingProject;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-
 public class CreateNumbers {
-
     public static BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
     static String item1 = " @@@@  ";
     static String item2 = "@@  @@ ";
@@ -20,10 +17,10 @@ public class CreateNumbers {
 
     public static void madenumber(String[][] numbers) {
 
-        System.out.println("Input six digits: ");
+        System.out.println("Input six digits (from 0 to 9): ");
 
         for (int i = 0; i < numbers.length + 1; i++) {
-            int numb = inputValidateNumber();
+            int numb = validateNumber();
             choosePicture(numb, i, numbers);
         }
     }
@@ -36,7 +33,21 @@ public class CreateNumbers {
             System.out.println();
         }
     }
+    public static int validateNumber() {
+        try {
+            int number = inputValidateNumber();
+            if (number < 10) {
+                return number;
+            }
+            System.out.println("Неверное значение: " + number);
+            System.out.println("Введите значение от 0 до 9 нажмая после каждой цифры ENTER: ");
+            throw new NumberFormatException();
 
+        } catch (NumberFormatException e) {
+            return validateNumber();
+        }
+
+    }
     public static int inputValidateNumber() {
         try {
             return Integer.parseInt(READER.readLine());
@@ -45,8 +56,8 @@ public class CreateNumbers {
             System.out.println("Введите значение снова: ");
             return inputValidateNumber();
         }
-    }
 
+    }
     public static void choosePicture(int n, int i, String[][] numbers) {
 
         switch (n) {
